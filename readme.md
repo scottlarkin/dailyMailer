@@ -37,3 +37,5 @@ Example `secrets.json`:
   }
 }
 ```
+
+Maybe not the best idea to actually run this, risks of not safe for work content being sent en-mass to the daily mail. They might get upset
