@@ -21,12 +21,18 @@ Example `secrets.json`:
     "port": 465 (depends on the host),
     "secure": true (depends on the host/port),
     "auth": {
-      "user": "<your smtp user>",
-      "pass": "<your smtp password>"
+        "user": "<your smtp user>",
+        "pass": "<your smtp password>"
     },
     "sender": {
-      "name": "<your name>",
-      "email": "<your email>"
+        "name": "<your name>",
+        "email": "<your email>"
+    },
+    "mailSpammer": {
+        "subreddits": [
+          "videos"
+        ],
+        "numPostsFromEachSubreddit": 100
     }
   }
 }

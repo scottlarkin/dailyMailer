@@ -13,4 +13,8 @@ export default interface IConfig {
             email: string;
         };
     };
+    mailSpammer: {
+        subreddits: string[],
+        numPostsFromEachSubreddit: number;
+    }
 }

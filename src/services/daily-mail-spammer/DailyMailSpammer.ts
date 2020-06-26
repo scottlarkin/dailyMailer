@@ -3,15 +3,10 @@ import {inject, injectable} from 'inversify';
 import {TYPES} from '../types';
 import {IReddit} from '../reddit/IReddit';
 import {IEmailer} from '../email/IEmail';
+import IConfig from "../../config/IConfig";
 
 @injectable()
 export class DailyMailSpammer implements IDailyMailSpammer {
-
-    //TODO - move to config
-    // What kind of video subreddits do daily mail readers like?
-    private readonly subreddits = [
-        'videos',
-    ];
 
     // TODO - add more strings & use a random one in each email body & maybe put in config
     // TODO - look into ML AI generated strings, feed training data from daily mail article comments
@@ -23,10 +18,13 @@ export class DailyMailSpammer implements IDailyMailSpammer {
     constructor(
         @inject(TYPES.REDDIT) private readonly reddit: IReddit,
         @inject(TYPES.EMAILER) private readonly emailer: IEmailer,
+        @inject(TYPES.CONFIG) private readonly config: IConfig['mailSpammer']
     ) { }
 
     async spam() {
-        const postsInAllSubs = await Promise.all(this.subreddits.map(sub => this.reddit.getTopPosts(sub, 100)));
+        const postsInAllSubs = await Promise.all(
+            this.config.subreddits.map(sub => this.reddit.getTopPosts(sub, this.config.numPostsFromEachSubreddit))
+        );
 
         const allPosts = postsInAllSubs.reduce((a, c) => [...a, ...c], []);
 

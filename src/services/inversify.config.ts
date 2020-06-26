@@ -21,13 +21,14 @@ IOC.bind<IDailyMailSpammer>(TYPES.DAILY_MAIL_SPAMMER).to(DailyMailSpammer);
 
 IOC.bind(TYPES.CONFIG).toDynamicValue((ctx) => {
     // When a service requires a "TYPES.CONFIG" injection, dynamically inject the correct part of the config for the requesting service
-    // EG if the class requiring config is "TYPES.EMAIL", config.email will be injected
+    // EG if the class requiring config is "TYPES.EMAILER", config.email will be injected
 
     // better way to get this??
     const {serviceIdentifier} = ctx.currentRequest.parentRequest;
 
     const serviceConfig = ({
         [TYPES.EMAILER]: config.email,
+        [TYPES.DAILY_MAIL_SPAMMER]: config.mailSpammer,
     })[serviceIdentifier as string];
 
     if (!serviceConfig) {
